@@ -1,0 +1,57 @@
+services:
+  PingPong.js:
+    container_name: PingPing.js
+    image: nodejs-custom1
+    build: nodejs-pingpong
+    restart: "always"
+    networks: 
+      - new_bridge
+    ports:
+      - "3001:3001"
+
+  PingPong.java:
+    container_name: PingPing.java
+    image: java-custom1
+    build: java-pingpong
+    restart: "always"
+    networks:
+      - new_bridge
+    ports:
+      - "8080:8080"
+
+  nginx:
+    container_name: nginx
+    image: nginx-custom1
+    build: nginx 
+    restart: "always"
+    networks:
+      - new_bridge
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx/files:/etc/nginx/files
+
+  postgres:
+    container_name: postgres
+    image: postgres:11.8
+    restart: "always"
+    environment:
+      POSTGRES_USER: db_admin     
+      POSTGRES_PASSWORD: sCrSAtgt0X0=
+      POSTGRES_DB: main_db       
+    ports:
+      - 5432:5432                
+    volumes:
+      - ./postgres/sql:/docker-entrypoint-initdb.d
+    networks:
+      - new_bridge
+    deploy:
+      resources:
+        limits:
+          cpus: 0.50
+          memory: 512M
+
+networks:
+  new_bridge:
+    name: new_bridge
+    driver: bridge
