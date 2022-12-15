@@ -2,7 +2,7 @@
 
 first, clone the project.
 
-then, run this command:
+then, run this command:  
 docker-compose up -d
 
 Now, open http://localhost:8000/ping multiple times in your browser. you're gonna see different results each time.
