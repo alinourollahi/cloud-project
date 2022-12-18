@@ -1,7 +1,8 @@
+version: "3.3"
 services:
   PingPong.js:
-    container_name: PingPing.js
-    image: nodejs-custom1
+    container_name: PingPong.js
+    image: nodejs-custom
     build: nodejs-pingpong
     restart: "always"
     networks: 
@@ -10,8 +11,8 @@ services:
       - "3001:3001"
 
   PingPong.java:
-    container_name: PingPing.java
-    image: java-custom1
+    container_name: PingPong.java
+    image: java-custom
     build: java-pingpong
     restart: "always"
     networks:
@@ -21,7 +22,7 @@ services:
 
   nginx:
     container_name: nginx
-    image: nginx-custom1
+    image: nginx-custom
     build: nginx 
     restart: "always"
     networks:
@@ -48,10 +49,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 0.50
+          cpus: "0.50"
           memory: 512M
+
 
 networks:
   new_bridge:
-    name: new_bridge
     driver: bridge
