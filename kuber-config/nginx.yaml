@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-custom
+  labels:
+    app: nginx-custom
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-custom
+  template:
+    metadata:
+      labels:
+        app: nginx-custom
+    spec:
+      containers:
+      - name: nginx-custom
+        image: alinourollahi/nginx-custom
+        #image: pouriyabp/nginx-test
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: data
+          mountPath: /etc/nginx/files
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: nginx-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-custom-svc
+spec:
+  selector:
+    app: nginx-custom
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
